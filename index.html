@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Notícias sobre a Garça</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        html, body {
+            height: 100%;
             margin: 0;
-            padding: 20px;
+            font-family: Arial, sans-serif;
             background-color: #f9f9f9;
         }
         .rss-feed {
@@ -37,13 +36,12 @@
     </style>
 </head>
 <body>
-    <h1>Notícias sobre o Caso da Garça</h1>
     <div id="rss-feed-container" class="rss-feed">
         <p>Carregando notícias...</p>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.3.6/iframeResizer.min.js"></script>
     <script>
-        // Substituir pela URL de um feed RSS válido
         const rssFeedUrl = 'https://news.google.com/rss/search?q=garça%20copo%20de%20plástico&hl=pt-BR&gl=BR&ceid=BR:pt-419';
 
         async function loadRSS() {
@@ -72,8 +70,13 @@
 
                     container.appendChild(rssItem);
                 });
+
+                // Notifique o iframe para redimensionar
+                if (window.parentIFrame) {
+                    window.parentIFrame.autoResize();
+                }
             } catch (error) {
-                document.getElementById("rss-feed-container").innerHTML = '<p>Não foi possível carregar as notícias. Tente novamente mais tarde.</p>';
+                document.getElementById("rss-feed-container").innerHTML = '<p>Infelizmente, não foi possível carregar o feed. Clique <a href="' + rssFeedUrl + '" target="_blank">aqui</a> para visualizar diretamente no Google Notícias.</p>';
                 console.error("Erro ao carregar o RSS:", error);
             }
         }
